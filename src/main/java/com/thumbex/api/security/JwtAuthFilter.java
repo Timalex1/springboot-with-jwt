@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class JwtAuthFilter extends GenericFilterBean {
 
-    private JwtAuthService authService;
+    private final JwtAuthService authService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -26,8 +26,7 @@ public class JwtAuthFilter extends GenericFilterBean {
         Authentication authentication = authService.getAuthentication((HttpServletRequest) request);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        filterChain.doFilter(request, response);
-
+        chain.doFilter(request, response);
     }
 
 }
